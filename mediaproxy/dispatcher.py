@@ -90,16 +90,16 @@ class ControlProtocol(LineOnlyReceiver):
         self.factory.connection_lost(self)
 
     def reply(self, reply):
-        self.transport.write(reply + "\r\n")
+		self.sendLine(reply)
 
     def _relay_error(self, failure):
         failure.trap(RelayError)
         log.error(failure.value)
-        self.transport.write("error\r\n")
+		self.sendLine("error")
 
     def _catch_all(self, failure):
         log.error(failure.getBriefTraceback())
-        self.transport.write("error\r\n")
+		self.sendLine("error")
 
     def _decrement(self, result):
         self.in_progress = 0

@@ -248,6 +248,7 @@ class RelayServerProtocol(LineOnlyReceiver):
         self.factory.new_relay(self)
 
     def lineReceived(self, line):
+		log.debug("line received %s" % line);
         try:
             first, rest = line.split(" ", 1)
         except ValueError:
@@ -549,6 +550,7 @@ class Dispatcher(object):
         reactor.run(installSignalHandlers=False)
 
     def send_command(self, command, headers):
+		log.debug("Command %s Headers %s" % (command,headers));
         return maybeDeferred(self.relay_factory.send_command, command, headers)
 
     def update_statistics(self, stats):
